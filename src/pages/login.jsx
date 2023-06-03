@@ -45,12 +45,12 @@ export default function Home() {
 
             <form onSubmit={FormLogin}>
                 <h1>Login: </h1>
-                    <input disabled={loading} value={email} onChange={e => setEmail(e.target.value)} type="email" required id="email" placeholder="Email"/>
-                    <input disabled={loading} value={password} onChange={e => setPassword(e.target.value)} type="password" required placeholder="Senha"/>
-                    <LoaderButton loading={loading}>Entrar</LoaderButton>
+                    <input data-test="email-input" disabled={loading} value={email} onChange={e => setEmail(e.target.value)} type="email" required id="email" placeholder="Email"/>
+                    <input data-test="password-input" disabled={loading} value={password} onChange={e => setPassword(e.target.value)} type="password" required placeholder="Senha"/>
+                    <LoaderButton testStr={"login-btn"} loading={loading}>Entrar</LoaderButton>
             </form>
         
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            <Link data-test="signup-link" to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
        </ScHome> 
     )
 }

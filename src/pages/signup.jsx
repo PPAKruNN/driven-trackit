@@ -40,14 +40,14 @@ export default function Signup() {
 
             <form onSubmit={FormSignUp}>
                 <h1>Cadastrar: </h1>
-                    <input disabled={loading} value={email} onChange={e => setEmail(e.target.value)} type="email" required placeholder="Email"/>
-                    <input disabled={loading} value={password} onChange={e => setPassword(e.target.value)} type="password" required placeholder="Senha"/>
-                    <input disabled={loading} value={name} onChange={e => setName(e.target.value)} type="text" id="name" required placeholder="Nome"/>
-                    <input disabled={loading} value={url} onChange={e => setURL(e.target.value)} type="url" id="url" required placeholder="URL de foto de perfil"/>
-                <LoaderButton loading={loading}>Entrar</LoaderButton>
+                    <input data-test="email-input" disabled={loading} value={email} onChange={e => setEmail(e.target.value)} type="email" required placeholder="Email"/>
+                    <input data-test="password-input" disabled={loading} value={password} onChange={e => setPassword(e.target.value)} type="password" required placeholder="Senha"/>
+                    <input data-test="user-name-input" disabled={loading} value={name} onChange={e => setName(e.target.value)} type="text" id="name" required placeholder="Nome"/>
+                    <input data-test="user-image-input" disabled={loading} value={url} onChange={e => setURL(e.target.value)} type="url" id="url" required placeholder="URL de foto de perfil"/>
+                <LoaderButton testStr={"signup-btn"} loading={loading}>Cadastrar</LoaderButton>
             </form>
         
-            <Link to="/">Já tem uma conta? Faça login!</Link>
+            <Link data-test="login-link" to="/">Já tem uma conta? Faça login!</Link>
        </ScSignup> 
     )
 }

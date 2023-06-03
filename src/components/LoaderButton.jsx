@@ -6,7 +6,7 @@ export default function LoaderButton(props) {
 
 
     return (
-        <StyledButton $loading={props.loading} >
+        <StyledButton data-test={props.testStr} $loading={props.loading} >
             <div>{props.children}</div>
             <ThreeDots
             height={24} 
