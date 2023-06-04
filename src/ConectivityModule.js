@@ -48,7 +48,7 @@ function getTodayHabits(token) {
 }
 
 
-function createHabit(token, data) {
+function postCreateHabit(token, data) {
 
     const config = {
         headers: {
@@ -60,4 +60,4 @@ function createHabit(token, data) {
     return promise;
 }
 
-export {registerNewUser, loginUser, getTodayHabits, createHabit, UserContext, HabitsContext}
+export {registerNewUser, loginUser, getTodayHabits, postCreateHabit, UserContext, HabitsContext}

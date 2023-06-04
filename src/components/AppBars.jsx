@@ -4,10 +4,13 @@ import styled from "styled-components";
 import logo_deitado from "../assets/logo_deitado.png"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AppBars() {
    const [user] = useContext(UserContext);
-   console.log(user)
+   
+    const navigate = useNavigate();
+
    return (
        <>
             <TopBar>
@@ -16,8 +19,8 @@ export default function AppBars() {
             </TopBar>     
 
             <BottomBar>
-                <a>Habitos</a> 
-                    <button>
+                <Link to='/habitos'>Habitos</Link> 
+                    <button onClick={() => navigate('/hoje')}>
                     <CircularProgressbar backgroundPadding={6}  background={true} value={75} styles={buildStyles({
                         pathTransitionDuration: 0.5,
                         
@@ -28,7 +31,7 @@ export default function AppBars() {
                     })} text="Hoje">
                     </CircularProgressbar>
                     </button>
-                <a>Historico</a>
+                <Link to="/historico">Historico</Link>
             </BottomBar>     
        </>
    )
@@ -43,7 +46,7 @@ const TopBar = styled.div`
 
     width: 100%;
 
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
 
@@ -69,7 +72,7 @@ const BottomBar = styled.div`
 
     width: 100%;
 
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     left: 0px;
 
@@ -78,7 +81,8 @@ const BottomBar = styled.div`
     box-sizing: border-box;
 
     a {
-        color: #52B6FF
+        color: #52B6FF;
+        text-decoration: none;
     }
 
     button {

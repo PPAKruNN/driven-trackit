@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify'; // Toasts.
 import 'react-toastify/dist/ReactToastify.css'; // Toast obrigatory css
 import AppBars from './components/AppBars';
 import Today from './pages/today';
+import Habits from './pages/habits';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path='/' element={<Login/>}/>
             <Route path='/cadastro' element={<Signup/>}/>
             <Route path='/hoje' element={<><AppBars/> <Today/></>}/>
+            <Route path='/habitos' element={<><AppBars/> <Habits/></>}/>
 
           </Routes> 
         </BrowserRouter>

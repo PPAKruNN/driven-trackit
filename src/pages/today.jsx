@@ -46,12 +46,14 @@ export default function Today() {
 
 const StyledToday = styled.div`
     margin-top: 84px;
+    margin-bottom: 120px;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
 
+    box-sizing: border-box;
     width: 100%;
+    padding: 0px 6% ;
 
 
 
@@ -61,8 +63,6 @@ const StyledToday = styled.div`
         flex-direction: column;
         gap: 6px;
         
-        align-self: flex-start;
-        margin-left: 6%;
 
         margin-top: 24px;
         margin-bottom: 24px;
@@ -70,7 +70,7 @@ const StyledToday = styled.div`
         justify-content: right;
     
         p {
-            color: #BABABA';
+            color: '#BABABA';
         }
 
     }
@@ -79,9 +79,11 @@ const StyledToday = styled.div`
 `
 
 const StyledHabitContainer = styled.div`
+    width: 100%;
+    max-width: 400px;
 
-    width: 88%;
-    max-width: 340px;
-
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
 `

@@ -4,9 +4,8 @@ import styled from "styled-components";
 /* eslint-disable react/prop-types */
 export default function LoaderButton(props) {
 
-
     return (
-        <StyledButton data-test={props.testStr} $loading={props.loading} >
+        <StyledButton disabled={props.loading} data-test={props.testStr} $loading={props.loading} >
             <div>{props.children}</div>
             <ThreeDots
             height={24} 
