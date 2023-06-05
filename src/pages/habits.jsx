@@ -1,10 +1,33 @@
 import styled from "styled-components"
-import CreateHabit from "../components/Habit"
+import CreateHabit from "../components/HabitForm"
 import { useState } from "react";
+import { useEffect } from "react";
+import { UserContext, getListHabits } from "../ConectivityModule";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import Habit from "../components/Habit";
 
 export default function Habits() {
-
     const [newHabitPrompt, setNewHabitPrompt] = useState(false); 
+    const [formState, setFormState] = useState({});
+
+    const [habits, setHabits] = useState([]);
+    const [user] = useContext(UserContext);
+
+    function formOnComplete(currFormState = undefined) {
+        setFormState(currFormState)
+        setNewHabitPrompt(false);
+    }
+
+    useEffect( () => {
+        getListHabits(user.token)
+            .then( (res) => {setHabits(res.data)})    
+            .catch( () => {
+                alert("Deu ruim ao carregar a lista de habitos.");
+                toast.error("Falha ao carregar a lista de habitos!");
+            })
+    })
+
 
     return (
         <StyledHabits>
@@ -12,8 +35,10 @@ export default function Habits() {
                 <h1>Meus habitos</h1>
                 <button onClick={() => setNewHabitPrompt(true)}>+</button>
             </div>
-            {newHabitPrompt ? <CreateHabit onComplete={() => setNewHabitPrompt(false)}/> : ""}
+            {newHabitPrompt ? <CreateHabit newState={formState} onComplete={(props) => formOnComplete(props)}/> : ""}
             <HabitContainer>
+                {habits.length === 0 ? <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p> : ""}
+                {habits.map( (curr) => {return (<Habit key={curr.id} id={curr.id} name={curr.name} days={curr.days}/>)} )}
             </HabitContainer>
 
             
@@ -34,10 +59,12 @@ const StyledHabits = styled.div`
     margin-top: 80px;
     margin-bottom: 80px;
 
-    div:first-child {
+    & > div:first-child {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        margin-bottom: 24px;
 
         button {
             box-sizing: border-box;

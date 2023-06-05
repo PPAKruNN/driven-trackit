@@ -6,6 +6,8 @@ const ENDPOINTS = {
     login: "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
     todayHabits: "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
     createHabit: "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    listHabits: "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    removeHabit: (id) => "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/" + id,
 }
 
 const UserContext = createContext([{}, () => {}])
@@ -60,4 +62,26 @@ function postCreateHabit(token, data) {
     return promise;
 }
 
-export {registerNewUser, loginUser, getTodayHabits, postCreateHabit, UserContext, HabitsContext}
+function getListHabits(token) {
+    const config = {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }
+
+    const promise = axios.get(ENDPOINTS.listHabits, config);
+    return promise;
+}
+
+function deleteRemoveHabit(token, id) {
+    const config = {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }
+
+    const promise = axios.delete(ENDPOINTS.removeHabit(id), config);
+    return promise;
+}
+
+export {registerNewUser, deleteRemoveHabit, loginUser, getTodayHabits, getListHabits, postCreateHabit, UserContext, HabitsContext}
