@@ -1,27 +1,40 @@
 import { useContext } from "react";
-import { UserContext } from "../ConectivityModule";
+import { HabitsContext, UserContext } from "../ConectivityModule";
 import styled from "styled-components";
-import logo_deitado from "../assets/logo_deitado.png"
+import logo_deitado from "../assets/logo_deitado.svg"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function AppBars() {
-   const [user] = useContext(UserContext);
+    const [user] = useContext(UserContext);
+    const [todayHabits] = useContext(HabitsContext);
+
+    const [percent, setPercent] = useState(1); 
    
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const validMap = todayHabits.filter(curr => curr.done);
+        console.log(validMap)
+
+        setPercent( (validMap.length/todayHabits.length) * 100);
+    }, [todayHabits]) 
+
+
    return (
        <>
-            <TopBar>
+            <TopBar data-test="header">
                 <img src={logo_deitado} alt="Track-It logo" />     
-                <img src={user.image} alt="User logo" />
+                <img data-test="avatar" src={user.image} alt="User logo" />
             </TopBar>     
 
-            <BottomBar>
-                <Link to='/habitos'>Habitos</Link> 
-                    <button onClick={() => navigate('/hoje')}>
-                    <CircularProgressbar backgroundPadding={6}  background={true} value={75} styles={buildStyles({
+            <BottomBar data-test="menu">
+                <Link data-test="habit-link" to='/habitos'>Habitos</Link> 
+                    <button data-test="today-link" onClick={() => navigate('/hoje')}>
+                    <CircularProgressbar backgroundPadding={6}  background={true} value={percent} styles={buildStyles({
                         pathTransitionDuration: 0.5,
                         
                         pathColor: '#FFFFFF',
@@ -31,7 +44,7 @@ export default function AppBars() {
                     })} text="Hoje">
                     </CircularProgressbar>
                     </button>
-                <Link to="/historico">Historico</Link>
+                <Link data-test="history-link" to="/historico">Historico</Link>
             </BottomBar>     
        </>
    )

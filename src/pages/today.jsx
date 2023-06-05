@@ -4,35 +4,57 @@ import { useContext } from "react";
 import { HabitsContext, UserContext, getTodayHabits } from "../ConectivityModule";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import localeData from "dayjs/plugin/localeData"
+import 'dayjs/locale/pt-br';
+import { useState } from "react";
 
 export default function Today() {
     
     const [todayHabits, setTodayHabits] = useContext(HabitsContext);
+    const [doneHabits, setDoneHabits] = useState();
     const [user] = useContext(UserContext)
+    const [day, setDay] = useState({weekday: "", day: ""});
+
+    useEffect( () => {
+        dayjs.locale('pt-br');
+        dayjs.extend(localeData);
+        const s = dayjs.weekdays()[dayjs().day()];
+        const wday = s.charAt(0).toUpperCase() + s.slice(1);
+
+        const monthDay = dayjs().date().toLocaleString('pt-br', {minimumIntegerDigits: 2}) + "/" + (dayjs().month() + 1).toLocaleString('pt-br', {minimumIntegerDigits: 2});
+
+        setDay({weekday: wday, day: monthDay});
+    }, [])
 
     useEffect(() => {
         getTodayHabits(user.token)
-            .then( res => setTodayHabits(res.data))
+            .then( res => {
+                setTodayHabits(res.data);
+                setDoneHabits(res.data.filter(curr => curr.done).length);
+            })
             .catch( (e) => {
                 console.log(e);
                 toast.error("Erro ao carregar os habitos de hoje: "+ e.response.data.message )
             });
 
-        console.log("Teste!");
-    }, [setTodayHabits, user.token])
+    }, [setDoneHabits, setTodayHabits, user])
 
 
     function genHabitChecks() {
         if(!todayHabits[0]) return;
-        return todayHabits.map( curr => {return(<HabitCheck key={curr.id} title={curr.name} maxSequence={curr.highestSequence} actualSequence={curr.currentSequence}  isChecked={curr.done}/>)})
+        return todayHabits.map( curr => {return(<HabitCheck key={curr.id} data={curr}/>)})
     }
 
+    function genLabel() {
+        return doneHabits === 0 ? <p data-test="today-counter" >{"Nenhum habito concluido ainda!"}</p> : <span data-test="today-counter" >{((doneHabits / todayHabits.length) * 100).toFixed(2) + "% dos habitos concluidos!"}</span> 
+    }
 
     return (
         <StyledToday>
             <div>
-                <h1>Segunda, 17/04</h1>
-                <p>Nenhum habito concluido ainda!</p>
+                <h1 data-test="today" >{day.weekday}, {day.day}</h1> 
+                {genLabel()}
             </div>
         
             <StyledHabitContainer>
@@ -68,13 +90,17 @@ const StyledToday = styled.div`
         margin-bottom: 24px;
         
         justify-content: right;
-    
-        p {
-            color: '#BABABA';
-        }
-
     }
     
+    & > div > p {
+        font-size: 18px;
+        color: #BABABA;
+    }
+        
+    & > div > span {
+        font-size: 18px;
+        color: #8FC549;
+    }
 
 `
 

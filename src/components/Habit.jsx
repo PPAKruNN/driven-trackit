@@ -13,21 +13,21 @@ export default function Habit ({id, name, days}) {
     }
 
     return (
-        <SCHabit>
+        <SCHabit data-test="habit-container" >
                 <div>
                     <div>
-                        <h1>{name}</h1>
-                        <img onClick={removeHabit} src={trashcan} />
+                        <h1 data-test="habit-name">{name}</h1>
+                        <img data-test="habit-delete-btn" onClick={removeHabit} src={trashcan} />
                     </div>
             
                     <div>
-                        <SCspan $checked={days.includes(1)} >S</SCspan>
-                        <SCspan $checked={days.includes(2)} >T</SCspan>
-                        <SCspan $checked={days.includes(0)} >D</SCspan>
-                        <SCspan $checked={days.includes(3)} >Q</SCspan>
-                        <SCspan $checked={days.includes(4)} >Q</SCspan>
-                        <SCspan $checked={days.includes(5)} >S</SCspan>
-                        <SCspan $checked={days.includes(6)} >S</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(0)} >D</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(1)} >S</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(2)} >T</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(3)} >Q</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(4)} >Q</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(5)} >S</SCspan>
+                        <SCspan data-test="habit-day" $checked={days.includes(6)} >S</SCspan>
                     </div>
                 </div>
         </SCHabit>

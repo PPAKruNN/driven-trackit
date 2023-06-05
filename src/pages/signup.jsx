@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import logo from "../assets/logo.jpeg";
-import { Link } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import { Link, useNavigate } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import { useState } from "react";
 import { registerNewUser } from "../ConectivityModule";
@@ -16,6 +16,8 @@ export default function Signup() {
 
     const [loading, setLoading] = useState(false)
 
+    const navigator = useNavigate();
+
     function FormSignUp(event) {
         event.preventDefault();
         
@@ -23,8 +25,9 @@ export default function Signup() {
 
         registerNewUser({email, password, name, image: url})
             .then(() => {
-                toast.success("Login realizado com sucesso!")
+                toast.success("Cadastro realizado com sucesso!")
                 setLoading(false)
+                navigator("/")
             })
             .catch(() => {
                 toast.error("O cadastro deu um erro.")

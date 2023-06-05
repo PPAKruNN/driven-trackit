@@ -24,7 +24,12 @@ export default function CreateHabit({onComplete , newState = undefined}) {
             setHabitName("");
         }
         
-
+        return () => {
+            setState({});
+            setLoading(false);
+            setDays([]);
+            setHabitName("")
+        }
     }, [newState])
     
     useEffect(() => {
@@ -64,7 +69,7 @@ export default function CreateHabit({onComplete , newState = undefined}) {
             .then(() => {
                 toast.success("Habito criado com sucesso!")
                 setLoading(false);
-                onComplete();
+                onComplete({});
             })
             .catch( error => {
                 alert("Deu ruim ein");
@@ -75,23 +80,23 @@ export default function CreateHabit({onComplete , newState = undefined}) {
     }
 
     return (
-        <SCHabit>
+        <SCHabit data-test="habit-create-container">
             <form onSubmit={(e) => createHabit(e)} >
-                <input disabled={loading} value={habitName} onChange={e => setHabitName(e.target.value)} placeholder="Nome do habito" type="text"/>
+                <input data-test="habit-name-input" disabled={loading} value={habitName} onChange={e => setHabitName(e.target.value)} placeholder="Nome do habito" type="text"/>
         
                 <div>
-                    <SCbutton disabled={loading} $checked={days.includes(0)} type="button" onClick={() => addWeekDay(0)} >D</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(1)} type="button" onClick={() => addWeekDay(1)} >S</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(2)} type="button" onClick={() => addWeekDay(2)} >T</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(3)} type="button" onClick={() => addWeekDay(3)} >Q</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(4)} type="button" onClick={() => addWeekDay(4)} >Q</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(5)} type="button" onClick={() => addWeekDay(5)} >S</SCbutton>
-                    <SCbutton disabled={loading} $checked={days.includes(6)} type="button" onClick={() => addWeekDay(6)} >S</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(0)} type="button" onClick={() => addWeekDay(0)} >D</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(1)} type="button" onClick={() => addWeekDay(1)} >S</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(2)} type="button" onClick={() => addWeekDay(2)} >T</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(3)} type="button" onClick={() => addWeekDay(3)} >Q</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(4)} type="button" onClick={() => addWeekDay(4)} >Q</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(5)} type="button" onClick={() => addWeekDay(5)} >S</SCbutton>
+                    <SCbutton data-test="habit-day"  disabled={loading} $checked={days.includes(6)} type="button" onClick={() => addWeekDay(6)} >S</SCbutton>
                 </div>
 
                 <div>
-                    <button onClick={cancelButton} disabled={loading} type="button">Cancelar</button>
-                    <LoaderButton loading={loading} testStr={"Algum"} type="submit">Salvar</LoaderButton>
+                    <button data-test="habit-create-cancel-btn" onClick={cancelButton} disabled={loading} type="button">Cancelar</button>
+                    <LoaderButton data-test="habit-create-save-btn" loading={loading} testStr={"Algum"} type="submit">Salvar</LoaderButton>
                 </div>
             </form>
         </SCHabit>

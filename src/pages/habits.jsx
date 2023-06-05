@@ -33,7 +33,7 @@ export default function Habits() {
         <StyledHabits>
             <div>
                 <h1>Meus habitos</h1>
-                <button onClick={() => setNewHabitPrompt(true)}>+</button>
+                <button data-test="habit-create-btn" onClick={() => setNewHabitPrompt(true)}>+</button>
             </div>
             {newHabitPrompt ? <CreateHabit newState={formState} onComplete={(props) => formOnComplete(props)}/> : ""}
             <HabitContainer>
