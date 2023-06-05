@@ -96,7 +96,7 @@ export default function CreateHabit({onComplete , newState = undefined}) {
 
                 <div>
                     <button data-test="habit-create-cancel-btn" onClick={cancelButton} disabled={loading} type="button">Cancelar</button>
-                    <LoaderButton data-test="habit-create-save-btn" loading={loading} testStr={"Algum"} type="submit">Salvar</LoaderButton>
+                    <LoaderButton testStr={"habit-create-save-btn"} loading={loading} type="submit">Salvar</LoaderButton>
                 </div>
             </form>
         </SCHabit>
